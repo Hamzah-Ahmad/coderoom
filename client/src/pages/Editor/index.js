@@ -14,6 +14,8 @@ const Editor = () => {
     useEffect(() => {
         socket.emit("join-room", roomId)
         socket.on('code-typed', (data) => setCodeContent(data))
+        socket.on('retrieve-data', (data) => setCodeContent(data))
+
         return () => {
             socket.emit("leave-room", roomId)
         }
