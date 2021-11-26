@@ -6,15 +6,16 @@ const io = require('socket.io')(server, {
     }
 });
 io.on("connection", (socket) => {
+    let dataObj = {}
     socket.on("code-typed", (data) => {
         io.to(socket.chatroom).emit('code-typed', data)
     })
-    socket.on("join-room", (data) => {
-        socket.join(data)
-        socket.chatroom = data;
+    socket.on("join-room", (roomId) => {
+        socket.join(roomId)
+        socket.chatroom = roomId;
     })
-    socket.on("leave-room", (data) => {
-        socket.leave(data)
+    socket.on("leave-room", (roomId) => {
+        socket.leave(roomId)
         socket.chatroom = "";
     })
 });
