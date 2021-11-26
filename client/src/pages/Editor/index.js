@@ -1,15 +1,18 @@
 import { useContext, useEffect, useState } from 'react'
 import { SocketContext } from '../../context/socket'
+import { useParams } from 'react-router'
 
 const Editor = () => {
     const socket = useContext(SocketContext)
+    const {roomId} = useParams();
     const [codeContent, setCodeContent] = useState("")
-    useEffect(() => {
-        socket.on('code-typed', (data) => setCodeContent(data))
 
-    }, [socket])
+    useEffect(() => {
+        socket.emit("join-room", roomId)
+        socket.on('code-typed', (data) => setCodeContent(data))
+    }, [socket, roomId])
+    
     const handleChange = (e) => {
-        // setCodeContent(e.target.value)
         socket.emit("code-typed", e.target.value)
     }
     return (
