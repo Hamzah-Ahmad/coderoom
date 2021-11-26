@@ -10,8 +10,12 @@ const Editor = () => {
     useEffect(() => {
         socket.emit("join-room", roomId)
         socket.on('code-typed', (data) => setCodeContent(data))
+
+        return () => {
+            socket.emit("leave-room", roomId)
+        }
     }, [socket, roomId])
-    
+
     const handleChange = (e) => {
         socket.emit("code-typed", e.target.value)
     }
