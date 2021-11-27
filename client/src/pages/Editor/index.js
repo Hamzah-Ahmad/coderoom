@@ -1,15 +1,17 @@
 import { useContext, useEffect, useState } from 'react'
 import { SocketContext } from '../../context/socket'
 import { useParams } from 'react-router'
-import {Controlled as CodeMirror} from 'react-codemirror2'
+import axios from "axios"
+import { Controlled as CodeMirror } from 'react-codemirror2'
 import 'codemirror/mode/javascript/javascript'
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 
 const Editor = () => {
     const socket = useContext(SocketContext)
-    const {roomId} = useParams();
+    const { roomId } = useParams();
     const [codeContent, setCodeContent] = useState("")
+    const [consoleOutput, setConsoleOutput] = useState("")
 
     useEffect(() => {
         socket.emit("join-room", roomId)
@@ -24,13 +26,25 @@ const Editor = () => {
     const handleChange = (val) => {
         socket.emit("code-typed", val)
     }
+    const executeCode = async () => {
+        try {
+            console.log(codeContent)
+            let res = await axios.post("http://localhost:5000/execute", { code: codeContent.replace(/(\r\n|\n|\r)/gm, " ") })
+            if(res.data){
+                console.log(res.data)
+                setConsoleOutput(JSON.stringify(res.data.data))
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
     return (
         <div>
             <div>Editor</div>
-           {/* <textarea  onChange={handleChange} value={codeContent}>
+            {/* <textarea  onChange={handleChange} value={codeContent}>
                
            </textarea> */}
-           <CodeMirror
+            <CodeMirror
                 value={codeContent}
                 options={{
                     lineWrapping: true,
@@ -43,6 +57,8 @@ const Editor = () => {
                     handleChange(value)
                 }}
             />
+            <button onClick={executeCode}>Execute</button>
+            <div>Console Output: {consoleOutput.replace(/("|\\n)/gm, "") }</div>
         </div>
     )
 }
