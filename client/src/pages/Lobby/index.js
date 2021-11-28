@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { v4 as uuidv4 } from 'uuid'
 import { useNavigate } from "react-router-dom"
+import styles from "./Lobby.module.scss"
 
 const Lobby = () => {
     let navigate = useNavigate();
@@ -19,13 +20,15 @@ const Lobby = () => {
         setRoomIdInput(e.target.value)
     }
     return (
-        <div>
-            <h1>Lobby</h1>
-            <button onClick={createRoom}>Make a room</button>
+        <div className={styles.container}>
             <div>
-                <input type="text" onChange={handleIdInput} />
-                <button onClick={joinExistingRoom}>Join Room</button>
+                <button onClick={createRoom} className={styles.make_room_btn}>Make a room</button>
+                <div className={styles.cta_section}>
+                    <input type="text" onChange={handleIdInput} className={styles.room_input} />
+                    <button onClick={joinExistingRoom} className={styles.join_room_btn}>Join Room</button>
+                </div>
             </div>
+            <div>Remaining</div>
         </div>
     )
 }

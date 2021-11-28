@@ -1,0 +1,28 @@
+@import "../../styles/variables";
+
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: space-between;
+}
+
+.cta_section {
+    
+}
+
+.join_room_btn {
+    @include button-outline();
+}
+
+.make_room_btn {
+    @include button();
+}
+
+.room_input {
+    padding: 14px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    width: 100;
+}
+

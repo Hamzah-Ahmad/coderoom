@@ -1,0 +1,7 @@
+@import './styles/variables';
+
+body{
+    background-color: $background;
+    height: 100vh;
+    // @include center();
+}
