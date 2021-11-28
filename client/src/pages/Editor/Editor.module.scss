@@ -3,8 +3,9 @@
     margin-top: 24px;
     color: $primary;
     font-size: 18px;
-    max-height: 60px;
+    max-height: 80px;
     overflow-y: scroll;
+    overflow-wrap: break-word;
     padding-right: 28px;
     &::-webkit-scrollbar {
         width: 2px;

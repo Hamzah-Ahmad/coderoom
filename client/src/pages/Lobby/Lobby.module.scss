@@ -1,28 +1,133 @@
 @import "../../styles/variables";
 
 .container {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.choice_text {
+    color: $primary-light;
+    font-size: 24px;
+    font-weight: bolder;
+    margin: 20px 0px;
     display: flex;
-    flex-direction: row;
-    align-items: space-between;
+    justify-content: center;
+    width: 100%;
 }
 
+.header {
+  font-size: 120px;
+  font-weight: bolder;
+  color: $primary-light;
+
+  animation: flicker 1.5s infinite alternate;
+}
+
+.subheader {
+  font-size: 30px;
+  font-weight: bold;
+  color: $primary-light;
+  margin: 30px;
+  width: 35%;
+  text-align: center;
+  overflow-wrap: break-word;
+  margin-bottom: 100px;
+}
+
+@keyframes flicker {
+  0%,
+  18%,
+  22%,
+  25%,
+  53%,
+  57%,
+  100% {
+    text-shadow: 0 0 4px #ffffff, 0 0 8px#FFFFFF, 0 0 19px $primary-light,
+      0 0 40px $primary-light, 0 0 80px $primary-light, 0 0 90px $primary-light,
+      0 0 100px $primary-light, 0 0 150px $primary-light;
+  }
+
+  20%,
+  24%,
+  55% {
+    text-shadow: none;
+  }
+}
 .cta_section {
-    
+    width: 30vw;
 }
 
+.input_section {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
 .join_room_btn {
-    @include button-outline();
-}
-
-.make_room_btn {
-    @include button();
+  @include button();
+  box-shadow: none;
+  right: 20px;
+  padding: 14px 10px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  font-size: 14px;
+  font-weight: bolder;
 }
 
 .room_input {
-    padding: 14px;
-    border-radius: 6px;
-    border: none;
-    outline: none;
-    width: 100;
+  flex: 2;
+  padding: 14px 0px;
+  border-radius: 6px;
+  border: none;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  outline: none;
+  color: $primary;
+  padding-left: 20px;
+  &::placeholder {
+      color: $primary;
+  }
 }
 
+.make_room_btn {
+  @include button();
+  display: block;
+  width: 100%;
+  font-size: 18px;
+  font-weight: bolder;
+  margin: 14px 0px;
+}
+
+@media only screen and (max-width: $md) {
+    .header{
+        font-size: 80px;
+    }
+    .subheader {
+        font-size: 24px;
+        width: 70%;
+    }
+
+    .choice_text {
+        font-size: 18px;
+    }
+    .cta_section {
+        width: 60vw;
+    }
+}
+@media only screen and (max-width: $sm) {
+    .header{
+        font-size: 50px;
+    }
+    .subheader {
+        font-size: 18px;
+        width: 85%;
+    }
+
+    .choice_text {
+        font-size: 18px;
+    }
+    .cta_section {
+        width: 80vw;
+    }
+}

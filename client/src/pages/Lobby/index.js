@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { v4 as uuidv4 } from 'uuid'
 import { useNavigate } from "react-router-dom"
+import toast, { Toaster } from 'react-hot-toast';
 import styles from "./Lobby.module.scss"
 
 const Lobby = () => {
@@ -14,6 +15,10 @@ const Lobby = () => {
         navigateToEditor(newRoom)
     }
     const joinExistingRoom = () => {
+        if(!roomIdInput){
+            toast.error('Please enter a room ID', {duration: 2000})
+            return;
+        }
         navigateToEditor(roomIdInput)
     }
     const handleIdInput = (e) => {
@@ -21,14 +26,21 @@ const Lobby = () => {
     }
     return (
         <div className={styles.container}>
-            <div>
+            <Toaster />
+            <div className={styles.header}>
+                CodeRoom
+            </div>
+            <div className={styles.subheader}>
+                Instantly create live collaboration coding rooms without the hassles of signing up or logging in!
+            </div>
+            <div className={styles.cta_section}>
                 <button onClick={createRoom} className={styles.make_room_btn}>Make a room</button>
-                <div className={styles.cta_section}>
-                    <input type="text" onChange={handleIdInput} className={styles.room_input} />
+                <div className={styles.choice_text}>Or Join An Existing Room</div>
+                <div className={styles.input_section}>
+                    <input type="text" onChange={handleIdInput} className={styles.room_input} placeholder="Enter room ID"/>
                     <button onClick={joinExistingRoom} className={styles.join_room_btn}>Join Room</button>
                 </div>
             </div>
-            <div>Remaining</div>
         </div>
     )
 }
