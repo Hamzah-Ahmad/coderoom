@@ -1,8 +1,11 @@
 import { useContext, useEffect, useState } from 'react'
 import { SocketContext } from '../../context/socket'
-import { useParams } from 'react-router'
+import { useParams, useNavigate } from 'react-router'
 import axios from "axios"
+import styles from "./Editor.module.scss"
 import { Controlled as CodeMirror } from 'react-codemirror2'
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+
 import 'codemirror/mode/javascript/javascript'
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
@@ -12,12 +15,14 @@ const Editor = () => {
     const { roomId } = useParams();
     const [codeContent, setCodeContent] = useState("")
     const [consoleOutput, setConsoleOutput] = useState("")
+    const [isError, setIsError] = useState(false)
+    let navigate = useNavigate();
+
 
     useEffect(() => {
         socket.emit("join-room", roomId)
         socket.on('code-typed', (data) => setCodeContent(data))
         socket.on('retrieve-data', (data) => setCodeContent(data))
-
         return () => {
             socket.emit("leave-room", roomId)
         }
@@ -30,35 +35,49 @@ const Editor = () => {
         try {
             console.log(codeContent)
             let res = await axios.post("http://localhost:5000/execute", { code: codeContent.replace(/(\r\n|\n|\r)/gm, " ") })
-            if(res.data){
-                console.log(res.data)
-                setConsoleOutput(JSON.stringify(res.data.data))
+            if (res.data) {
+                console.log(res)
+                if (res.data.type === "error") {
+                    setIsError(true)
+                    setConsoleOutput(JSON.stringify(res.data.data))
+                } else {
+                    setIsError(false)
+                    setConsoleOutput(JSON.stringify(res.data.data))
+                }
             }
         } catch (err) {
             console.log(err)
         }
     }
     return (
-        <div>
-            <div>Editor</div>
-            {/* <textarea  onChange={handleChange} value={codeContent}>
-               
-           </textarea> */}
-            <CodeMirror
-                value={codeContent}
-                options={{
-                    lineWrapping: true,
-                    lint: true,
-                    mode: "javascript",
-                    lineNumbers: true,
-                    theme: "material"
-                }}
-                onBeforeChange={(editor, data, value) => {
-                    handleChange(value)
-                }}
-            />
-            <button onClick={executeCode}>Execute</button>
-            <div>Console Output: {consoleOutput.replace(/("|\\n)/gm, "") }</div>
+        <div className={styles.container}>
+            <div className={styles.invite_text}>
+                <CopyToClipboard text={roomId}>
+                    <button className={styles.roomId_btn}>Copy this coderoom's ID <i class="fa fa-copy" aria-hidden="true"></i></button>
+                </CopyToClipboard>
+                <button onClick={() => navigate("/")} className={styles.exit_btn}><i class="fa fa-sign-out" aria-hidden="true"></i></button>
+            </div>
+            <div className={styles.editor_section}>
+                <CodeMirror
+                    value={codeContent}
+                    options={{
+                        lineWrapping: true,
+                        lint: true,
+                        mode: "javascript",
+                        lineNumbers: true,
+                        theme: "material"
+                    }}
+                    onBeforeChange={(editor, data, value) => {
+                        handleChange(value)
+                    }}
+                />
+            </div>
+            <div className={styles.output_section}>
+                <button className={styles.execute_btn} onClick={executeCode}>
+                    <i className="fa fa-play" style={{ color: "#FFFFFF" }}></i> Run
+                </button>
+                <div className={!isError ? styles.console_output : styles.console_output_error}>{consoleOutput.replace(/(\r\n|\r|"|\\n)/gm, "")}</div>
+            </div>
         </div>
     )
 }

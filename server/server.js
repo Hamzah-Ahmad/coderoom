@@ -35,7 +35,7 @@ app.post("/execute", (req, res) => {
             result = { type: "error", data: data.toString() };
         })
         javaScript.on('close', (code) => {
-            // if(fileName) fs.unlinkSync(fileName);
+            if(fileName) fs.unlinkSync(fileName);
             res.json(result);
         });
     } catch (e) {

@@ -4,13 +4,13 @@ $dark: #091013;
 $primary: #01954C;
 $primary_dark: #035633;
 $primary_light: #00C85F;
+$white: #FFFFFF;
 
 // Screen Sizes
-$xl: 1201px;
-$lg: 1024px;
-$md: 769px;
-$sm: 481px;
-$xs: 320px;
+$lg: 1200px;
+$md: 1024px;
+$sm: 768px;
+$xs: 480px;
 
 //mixins
 @mixin center($direction: "row") {
@@ -20,17 +20,22 @@ $xs: 320px;
     justify-content: center;
 }
 
-@mixin button($bg: $primary_light, $color: #FFF, $padding: 14px, $radius: 12px) {
+@mixin button($bg: $primary_light, $color: #FFF, $padding: 14px, $radius: 8px, $width: 100px) {
     background-color: $bg;
     padding: $padding;
     color: $color;
     border-radius: $radius;
     outline: none;
     border: none;
+    min-width: $width;
+    box-shadow: 0px 5px 20px $primary;
+    color: #fff;
+    cursor: pointer;
 }
 @mixin button-outline($color: $primary-light, $border: $primary-light, $padding: 14px, $radius: 12px) {
     @include button($padding, $radius);
     background-color: transparent;
     border: 2px solid $border;
     color: $primary;
+    box-shadow: none;
 }
