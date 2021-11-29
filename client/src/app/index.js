@@ -19,8 +19,6 @@ function App() {
           <Route path="*" element={<NotFound />}/>
         </Routes>
       </BrowserRouter>
-      <div className="App">
-      </div>
     </SocketProvider>
   );
 }

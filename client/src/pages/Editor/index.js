@@ -34,7 +34,7 @@ const Editor = () => {
     const executeCode = async () => {
         try {
             console.log(codeContent)
-            let res = await axios.post("http://localhost:5000/execute", { code: codeContent.replace(/(\r\n|\n|\r)/gm, " ") })
+            let res = await axios.post("/execute", { code: codeContent.replace(/(\r\n|\n|\r)/gm, " ") })
             if (res.data) {
                 console.log(res)
                 if (res.data.type === "error") {
