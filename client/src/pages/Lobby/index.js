@@ -28,7 +28,7 @@ const Lobby = () => {
         <div className={styles.container}>
             <Toaster />
             <div className={styles.header}>
-                CodeRoom
+                CodeRooms
             </div>
             <div className={styles.subheader}>
                 Instantly create live collaboration coding rooms without the hassles of signing up or logging in!
