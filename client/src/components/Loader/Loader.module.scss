@@ -1,0 +1,31 @@
+@import "../../styles/variables";
+
+.container {
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.loader {
+    border: 8px solid $background; /* Light grey */
+    border-top: 8px solid $primary-light; /* Blue */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+  }
+
+  .loader_text {
+      margin-top: 24px;
+      color: $primary-light;
+      font-size: 24px;
+      text-align: center;
+      text-shadow: 0 0 2px #ffffff,  0 0 15px $primary,
+      0 0 20px $primary, 0 0 30px $primary, 0 0 40px $primary;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

@@ -14,11 +14,19 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-// prevent CORS error in development
+// prevent CORS error 
 app.use(cors())
 
-const io = require('socket.io')(server);
+const io = require('socket.io')(server, {
+    cors: {
+        origin: "*"
+    }
+});
 
+// route to wake Heroku dyno 
+app.get("/", (req, res) => {
+    res.status(200).json({message: "Server awake"})
+})
 // route to execute code on the server.
 app.post("/execute", (req, res) => {
     const { code } = req.body;

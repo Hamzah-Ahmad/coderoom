@@ -1,6 +1,7 @@
 import { createContext } from "react";
-import {io} from "socket.io-client"
-export const socket = io.connect("/");
+import {io} from "socket.io-client";
+import {SERVER_URL} from "../config"
+export const socket = io.connect(SERVER_URL);
 export const SocketContext = createContext(socket);
 
 const SocketProvider = ({children}) => {

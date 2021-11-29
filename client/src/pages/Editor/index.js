@@ -5,6 +5,7 @@ import axios from "axios"
 import styles from "./Editor.module.scss"
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { SERVER_URL } from '../../config'
 
 import 'codemirror/mode/javascript/javascript'
 import 'codemirror/lib/codemirror.css';
@@ -18,10 +19,12 @@ const Editor = () => {
     const [isError, setIsError] = useState(false)
     let navigate = useNavigate();
 
-
     useEffect(() => {
         socket.emit("join-room", roomId)
-        socket.on('code-typed', (data) => setCodeContent(data))
+        socket.on('code-typed', (data) => {
+            console.log(data)
+            setCodeContent(data)
+        })
         socket.on('retrieve-data', (data) => setCodeContent(data))
         return () => {
             socket.emit("leave-room", roomId)
@@ -29,12 +32,13 @@ const Editor = () => {
     }, [socket, roomId])
 
     const handleChange = (val) => {
+        // setCodeContent(val)
         socket.emit("code-typed", val)
     }
     const executeCode = async () => {
         try {
             console.log(codeContent)
-            let res = await axios.post("/execute", { code: codeContent.replace(/(\r\n|\n|\r)/gm, " ") })
+            let res = await axios.post(`${SERVER_URL}/execute`, { code: codeContent.replace(/(\r\n|\n|\r)/gm, " ") })
             if (res.data) {
                 console.log(res)
                 if (res.data.type === "error") {
