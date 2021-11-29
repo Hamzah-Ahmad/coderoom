@@ -22,7 +22,6 @@ const Editor = () => {
     useEffect(() => {
         socket.emit("join-room", roomId)
         socket.on('code-typed', (data) => {
-            console.log(data)
             setCodeContent(data)
         })
         socket.on('retrieve-data', (data) => setCodeContent(data))
@@ -32,15 +31,13 @@ const Editor = () => {
     }, [socket, roomId])
 
     const handleChange = (val) => {
-        // setCodeContent(val)
+        setCodeContent(val)
         socket.emit("code-typed", val)
     }
     const executeCode = async () => {
         try {
-            console.log(codeContent)
             let res = await axios.post(`${SERVER_URL}/execute`, { code: codeContent.replace(/(\r\n|\n|\r)/gm, " ") })
             if (res.data) {
-                console.log(res)
                 if (res.data.type === "error") {
                     setIsError(true)
                     setConsoleOutput(JSON.stringify(res.data.data))
@@ -57,9 +54,9 @@ const Editor = () => {
         <div className={styles.container}>
             <div className={styles.invite_text}>
                 <CopyToClipboard text={roomId}>
-                    <button className={styles.roomId_btn}>Copy this coderoom's ID <i class="fa fa-copy" aria-hidden="true"></i></button>
+                    <button className={styles.roomId_btn}>Copy this coderoom's ID <i className="fa fa-copy" aria-hidden="true"></i></button>
                 </CopyToClipboard>
-                <button onClick={() => navigate("/")} className={styles.exit_btn}><i class="fa fa-sign-out" aria-hidden="true"></i></button>
+                <button onClick={() => navigate("/")} className={styles.exit_btn}><i className="fa fa-sign-out" aria-hidden="true"></i></button>
             </div>
             <div className={styles.editor_section}>
                 <CodeMirror

@@ -56,7 +56,7 @@ app.post("/execute", (req, res) => {
 let dataObj = {} //dataObj will be used to provide all the current code in the room to new participants
 io.on("connection", (socket) => {
     socket.on("code-typed", (data) => {
-        io.to(socket.chatroom).emit('code-typed', data)
+        socket.to(socket.chatroom).emit('code-typed', data)
         dataObj[socket.chatroom] = data;
     })
     socket.on("join-room", (roomId) => {
