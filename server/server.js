@@ -25,8 +25,6 @@ const io = require("socket.io")(server, {
 
 // route to wake Heroku dyno
 app.get("/", (req, res) => {
-  console.log(process.env.JDOODLE_CLIEN_ID);
-  console.log(process.env.JDOODLE_CLIENT_SECRET);
   res.status(200).json({ message: "Server awake" });
 });
 // route to execute code on the server.
