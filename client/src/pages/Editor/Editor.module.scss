@@ -1,5 +1,6 @@
 @import "../../styles/variables";
-.console_output{
+
+.console_output {
     margin-top: 24px;
     color: $primary;
     font-size: 18px;
@@ -7,19 +8,21 @@
     overflow-y: scroll;
     overflow-wrap: break-word;
     padding-right: 28px;
+
     &::-webkit-scrollbar {
         width: 2px;
-      }
-       
-  
-       
-      &::-webkit-scrollbar-thumb {
+    }
+
+
+
+    &::-webkit-scrollbar-thumb {
         background-color: $primary-light;
         outline: 1px solid $primary-light;
-      }
+    }
 
 }
-.console_output_error{
+
+.console_output_error {
     @extend .console_output;
     color: #ff3333;
 }
@@ -35,11 +38,13 @@
 .exit_btn {
     @extend .roomId_btn;
 }
+
 .invite_text {
-    text-align: right;
     font-size: 18px;
     color: $primary-light;
     margin-bottom: 12px;
+    display: flex;
+    justify-content: right;
 }
 
 .output_section {
@@ -61,22 +66,93 @@
     background-color: $dark;
     color: $primary;
     cursor: pointer;
+
     &:active {
-        transform: scale(1.04) ;
+        transform: scale(1.04);
     }
 }
 
 @media only screen and (max-width: $md) {
-    .container{
+    .container {
         padding: 50px;
 
     }
 }
+
 @media only screen and (max-width: $sm) {
-    .container{
+    .container {
         padding: 0px;
     }
+
+
+}
+
+@media only screen and (max-width: $xs) {
+
     .invite_text {
-        text-align: right;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        text-align: left;
+
     }
+
+    .exit_btn {
+        width: fit-content;
+
+    }
+
+    .roomId_btn {
+        width: fit-content;
+
+    }
+}
+
+.loader_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.loader {
+    width: 20px;
+    /* control the size */
+    aspect-ratio: 1;
+    display: grid;
+    mask: conic-gradient(from 22deg, #0003, #000);
+    animation: load 1s steps(8) infinite;
+}
+
+.loader,
+.loader:before {
+    --_g: linear-gradient(#035633 0 0) 50%;
+    background:
+        var(--_g)/34% 8% space no-repeat,
+        var(--_g)/8% 34% no-repeat space;
+}
+
+.loader:before {
+    content: "";
+    transform: rotate(45deg);
+}
+
+@keyframes load {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+.picker {
+    padding: 4px;
+    padding-left: 8px;
+    border: none;
+    border-radius: 4px;
+    margin-left: 12px;
+    width: 100px;
+    background-color: $dark;
+    color: $primary;
+    cursor: pointer;
+
+    outline: none;
 }
