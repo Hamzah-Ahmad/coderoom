@@ -51,9 +51,7 @@ const Editor = () => {
           setIsError(false);
           let consoleOutputRaw = JSON.stringify(res.data.data) || "";
           consoleOutputRaw.replace(/(\r\n|\r|"|\\n)/gm, "");
-          console.log({ consoleOutputRaw });
           setConsoleOutput(consoleOutputRaw);
-          // consoleOutput.replace(/(\r\n|\r|"|\\n)/gm, "")
         }
       }
     } catch (err) {
