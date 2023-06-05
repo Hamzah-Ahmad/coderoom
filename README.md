@@ -1,6 +1,7 @@
 # coderoom
-An online code collaboration tool along with minimal ES5 javascript code execution functionality.
-Built mainly to get some hands-on Socket.IO practice
+An online code collaboration tool.
+Built mainly to get some hands-on Socket.IO practice.
+Utilizes JDoodle API's free tier for code compilation
 
 ### Live site: 
 https://code-rooms.netlify.app/
@@ -11,6 +12,7 @@ https://code-rooms.netlify.app/
   - Socket.IO
   - CodeMirror
   - SASS
+  - JDoodle API
 
 
 
